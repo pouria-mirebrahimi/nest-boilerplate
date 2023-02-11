@@ -16,6 +16,7 @@ import { Unique } from '../../common/lib/decorator/unique.decorator';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { UserInterceptor } from '../../common/lib/interceptor/user.interceptor';
 import { MulterModule } from '@nestjs/platform-express';
+import { RoleModule } from '../role/role.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);
 
@@ -34,6 +35,7 @@ const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);
     UserModule,
     AdminModule,
     AuthModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService, IdExists, Unique],

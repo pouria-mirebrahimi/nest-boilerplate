@@ -14,7 +14,12 @@ export class UserService {
   }
 
   async getUserById(id: number): Promise<User | undefined> {
-    const result = await this.repository.queryOneById(id);
+    const result = await this.repository.queryOneByOption({
+      relations: ['roles'],
+      where: {
+        id,
+      },
+    });
 
     if (!result) {
       throw new NotFoundException();

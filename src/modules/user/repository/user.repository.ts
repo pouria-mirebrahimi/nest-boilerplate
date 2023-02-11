@@ -1,8 +1,15 @@
-import { DataSource, FindManyOptions, UpdateResult } from 'typeorm';
+import {
+  DataSource,
+  FindManyOptions,
+  UpdateResult,
+  FindOneOptions,
+} from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { User } from '../entity/user.entity';
 import { CreateUserDto } from '../dto/user.dto';
 import { AbsRepository } from '../../../common/lib/repository/repository';
+import { FindOptionsWhere, ObjectID } from 'typeorm';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 @Injectable()
 export class UserRepository extends AbsRepository<User> {
@@ -10,18 +17,35 @@ export class UserRepository extends AbsRepository<User> {
     super(User, dataSource.createEntityManager());
   }
 
-  queryOneByOption(): Promise<User> {
-    throw new Error('Method not implemented.');
+  async queryOneByOption(option: FindOneOptions): Promise<User | undefined> {
+    const found = await this.findOne(option);
+    return found;
   }
+
   queryManyByOption(): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
   queryCreate(): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  queryUpdate(): Promise<UpdateResult> {
-    throw new Error('Method not implemented.');
+
+  async queryUpdate(
+    criteria:
+      | string
+      | number
+      | FindOptionsWhere<User>
+      | Date
+      | ObjectID
+      | string[]
+      | number[]
+      | Date[]
+      | ObjectID[],
+    partialEntity: QueryDeepPartialEntity<User>,
+  ): Promise<UpdateResult> {
+    const updateResult = await this.update(criteria, partialEntity);
+    return updateResult;
   }
+
   queryDelete(): void {
     throw new Error('Method not implemented.');
   }

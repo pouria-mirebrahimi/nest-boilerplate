@@ -24,7 +24,7 @@ export class UserController {
     return this.service.getUserById(id);
   }
 
-  @Post()
+  @Post('/')
   @ApiBody({ type: CreateUserDto })
   public createUser(@Body() body: CreateUserDto): Promise<User | undefined> {
     return this.service.createUser(body);
