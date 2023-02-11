@@ -21,7 +21,6 @@ import { JWTAccessAuthGuard } from '../../auth/guard/jwt/auth.guard';
 import { User } from '../../../common/lib/decorator/user.decorator';
 import { AuthorizedGuard } from '../../../common/lib/guard/authorized';
 import { Post } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadFileInterceptor } from '../../../common/lib/interceptor/file.interceptor';
 
 @ApiTags('admin')

@@ -3,13 +3,13 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 
 // locals
-import { UsersService } from '../service/users.service';
-import { UsersRepository } from '../repository/users.repository';
+import { UserService } from '../service/user.service';
+import { UserRepository } from '../repository/user.repository';
 import mockUsers from './mock-users';
 
 describe('User ::: testing service', () => {
-  let service: UsersService;
-  let repository: UsersRepository;
+  let service: UserService;
+  let repository: UserRepository;
 
   const mockUserRepository = {
     queryAllEntities: jest.fn(() => mockUsers),
@@ -24,18 +24,16 @@ describe('User ::: testing service', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [],
       providers: [
-        UsersService,
+        UserService,
         {
-          provide: getRepositoryToken(UsersRepository),
+          provide: getRepositoryToken(UserRepository),
           useValue: mockUserRepository,
         },
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
-    repository = module.get<UsersRepository>(
-      getRepositoryToken(UsersRepository),
-    );
+    service = module.get<UserService>(UserService);
+    repository = module.get<UserRepository>(getRepositoryToken(UserRepository));
   });
 
   it('should be defined', () => {

@@ -1,10 +1,14 @@
+import { UpdateResult, DataSource } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { AbsRepository } from '../../../common/lib/repository/repository';
 import { Admin } from '../entity/admin.entity';
-import { UpdateResult } from 'typeorm';
 
 @Injectable()
 export class AdminRepository extends AbsRepository<Admin> {
+  constructor(private readonly dataSource: DataSource) {
+    super(Admin, dataSource.createEntityManager());
+  }
+
   async queryOneById(id: number): Promise<Admin> {
     const found = await this.findOneBy({ id });
     return found;

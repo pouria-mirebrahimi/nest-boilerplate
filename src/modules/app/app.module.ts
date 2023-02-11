@@ -6,7 +6,7 @@ import { DataSource } from 'typeorm';
 // locals
 import { AppController } from './controller/app.controller';
 import { AppService } from './service/app.service';
-import { UsersModule } from '../user/users.module';
+import { UserModule } from '../user/user.module';
 import { getEnvPath } from '../../common/helper/env.helper';
 import { TypeOrmConfigService } from '../../database/typeorm.service';
 import { AdminModule } from '../admin/admin.module';
@@ -16,6 +16,7 @@ import { Unique } from '../../common/lib/decorator/unique.decorator';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { UserInterceptor } from '../../common/lib/interceptor/user.interceptor';
 import { MulterModule } from '@nestjs/platform-express';
+import { RoleModule } from '../role/role.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);
 
@@ -31,9 +32,10 @@ const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);
     MulterModule.register({
       dest: './uploads',
     }),
-    UsersModule,
+    UserModule,
     AdminModule,
     AuthModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService, IdExists, Unique],

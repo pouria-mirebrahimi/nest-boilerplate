@@ -1,10 +1,5 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Admin {
