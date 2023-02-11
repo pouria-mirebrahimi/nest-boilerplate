@@ -6,7 +6,7 @@ import { DataSource } from 'typeorm';
 // locals
 import { AppController } from './controller/app.controller';
 import { AppService } from './service/app.service';
-import { UsersModule } from '../user/users.module';
+import { UserModule } from '../user/user.module';
 import { getEnvPath } from '../../common/helper/env.helper';
 import { TypeOrmConfigService } from '../../database/typeorm.service';
 import { AdminModule } from '../admin/admin.module';
@@ -31,7 +31,7 @@ const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);
     MulterModule.register({
       dest: './uploads',
     }),
-    UsersModule,
+    UserModule,
     AdminModule,
     AuthModule,
   ],

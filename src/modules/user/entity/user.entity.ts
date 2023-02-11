@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Users {
+export class User {
   @PrimaryGeneratedColumn()
   public id!: number;
 
@@ -19,6 +19,10 @@ export class Users {
 
   @Column({ default: false })
   public isDeleted: boolean;
+
+  /**
+   * Relations
+   */
 
   /*
    * Create and Update Date Columns

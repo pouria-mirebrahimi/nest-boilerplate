@@ -1,6 +1,6 @@
-import { Users } from '../entity/users.entity';
+import { User } from '../entity/user.entity';
 
-const mockUsers: Users[] = [
+const mockUsers: User[] = [
   {
     id: 1,
     name: 'John Doe',

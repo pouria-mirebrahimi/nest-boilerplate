@@ -15,7 +15,7 @@
   },
   "SQLServer": {
     "type": "mssql",
-    "name": "db_nest_mini",
+    "name": "db_nest_boilerplate",
     "host": "localhost",
     "port": "1433",
     "username": "sa",

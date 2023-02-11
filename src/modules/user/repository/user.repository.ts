@@ -1,22 +1,22 @@
 import { DataSource, FindManyOptions, UpdateResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { Users } from '../entity/users.entity';
-import { CreateUserDto } from '../dto/users.dto';
+import { User } from '../entity/user.entity';
+import { CreateUserDto } from '../dto/user.dto';
 import { AbsRepository } from '../../../common/lib/repository/repository';
 
 @Injectable()
-export class UsersRepository extends AbsRepository<Users> {
+export class UserRepository extends AbsRepository<User> {
   constructor(private dataSource: DataSource) {
-    super(Users, dataSource.createEntityManager());
+    super(User, dataSource.createEntityManager());
   }
 
-  queryOneByOption(): Promise<Users> {
+  queryOneByOption(): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  queryManyByOption(): Promise<Users[]> {
+  queryManyByOption(): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
-  queryCreate(): Promise<Users> {
+  queryCreate(): Promise<User> {
     throw new Error('Method not implemented.');
   }
   queryUpdate(): Promise<UpdateResult> {
@@ -26,17 +26,17 @@ export class UsersRepository extends AbsRepository<Users> {
     throw new Error('Method not implemented.');
   }
 
-  async queryOneById(id: number): Promise<Users | undefined> {
+  async queryOneById(id: number): Promise<User | undefined> {
     const result = await this.findOneBy({ id: id });
     return result;
   }
 
-  async queryAllEntities(options?: FindManyOptions<Users>): Promise<Users[]> {
+  async queryAllEntities(options?: FindManyOptions<User>): Promise<User[]> {
     const result = await this.find(options);
     return result;
   }
 
-  async createEntity(body: CreateUserDto): Promise<Users | undefined> {
+  async createEntity(body: CreateUserDto): Promise<User | undefined> {
     const { name, email } = body;
 
     const newUser = this.create({
