@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Validate,
 } from 'class-validator';
@@ -14,6 +15,16 @@ import { AddPrefix } from '../../../common/lib/transformer/username.transformer'
 import { JsonParse } from '../../../common/lib/transformer/json.transformer';
 import { MinYears } from '../../../common/lib/decorator/date.decorator';
 import { NotExpired } from '../../../common/lib/decorator/date.decorator';
+
+export class filterDto {
+  @IsString()
+  @IsOptional()
+  search?: string;
+
+  @IsString()
+  @IsOptional()
+  sorting?: string;
+}
 
 export class getAdminOptions {
   // @Validate(IdExists, [Admin])
@@ -34,7 +45,7 @@ export class getAdminOptions {
 
   @JsonParse()
   @IsNotEmptyObject()
-  filter: { search: string; sorting: string };
+  filter: filterDto;
 
   @MinYears({ years: 4 })
   @IsDateString()
@@ -49,5 +60,6 @@ export class GetAdminOutputDto {
   @Mapped() id: number;
   @Mapped() name: string;
   @Mapped() username: string;
-  @Mapped() filter: { search: string; sorting: string };
+  @Mapped(() => filterDto)
+  filter: filterDto;
 }

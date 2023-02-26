@@ -36,8 +36,7 @@ export class AdminController {
     @Param('id', ParseIntPipe) id: number,
     @User() userInfo,
   ): Promise<void> {
-    console.log(userInfo);
-    return;
+    return this.service.getAdminUser(id, userInfo);
   }
 
   @Get('/')

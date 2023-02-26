@@ -2,14 +2,13 @@ import {
   IsNotEmpty,
   IsNumber,
   IsString,
-  Validate,
   ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { MappedWithEntity } from '../../../common/lib/type/mapper.types';
 import { Role } from '../entity/role.entity';
-import { Mapped } from 'src/common/lib/decorator/map.decorator';
-import { User } from 'src/modules/user/entity/user.entity';
-import { Type } from 'class-transformer';
+import { Mapped } from '../../../common/lib/decorator/map.decorator';
+import { User } from '../../user/entity/user.entity';
 
 export class CreateRoleDto {
   @IsString()

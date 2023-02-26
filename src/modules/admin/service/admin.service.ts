@@ -9,6 +9,10 @@ export class AdminService {
   @InjectRepository(AdminRepository)
   private readonly repository: AdminRepository;
 
+  async getAdminUser(id: number, userInfo: any): Promise<void> {
+    return;
+  }
+
   // async onlyAdminRequest(id: number): Promise<User> {
   //   return await this.repository.queryOneById(id);
   // }

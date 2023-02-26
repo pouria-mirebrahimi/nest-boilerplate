@@ -7,7 +7,15 @@ import { UserService } from '../service/user.service';
 describe('User ::: testing controller', () => {
   let controller: UserController;
 
-  const mockUsersService = {};
+  const mockUsersService = {
+    getUserById: jest.fn().mockImplementationOnce((id: number) => {
+      return {
+        id,
+        name: 'johnDoe',
+        email: 'johndoe@example.com',
+      };
+    }),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -24,5 +32,10 @@ describe('User ::: testing controller', () => {
 
   it('controller should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  it('should return a user by id', async () => {
+    const found = await controller.getUser(1);
+    expect(found.id).toEqual(1);
   });
 });
