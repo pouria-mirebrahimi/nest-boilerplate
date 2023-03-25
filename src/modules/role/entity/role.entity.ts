@@ -22,13 +22,6 @@ export class Role {
    * Relations
    */
 
-  // @OneToOne(() => User, (user) => user.role, { cascade: true })
-  // @JoinColumn()
-  // user: User;
-
-  // @OneToMany(() => User, (user) => user.role, { cascade: ['update'] })
-  // users: User[];
-
   @ManyToMany(() => User, (user) => user.roles, { cascade: ['update'] })
   users: User[];
 }

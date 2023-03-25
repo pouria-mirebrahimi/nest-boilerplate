@@ -1,10 +1,11 @@
+import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { SqlServerConnectionOptions } from 'typeorm/driver/sqlserver/SqlServerConnectionOptions';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { SeederOptions, runSeeders } from 'typeorm-extension';
 import { Injectable, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 // locals
 import { jsonConfig } from '../common/helper/config.helper';
-import { DataSource } from 'typeorm';
-import { SqlServerConnectionOptions } from 'typeorm/driver/sqlserver/SqlServerConnectionOptions';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -17,7 +18,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       this.config.get<string>('DATABASE'),
     );
 
-    const typeOrmModuleOptions: TypeOrmModuleOptions = {
+    const typeOrmModuleOptions: TypeOrmModuleOptions &
+      DataSourceOptions &
+      SeederOptions = {
       type: Database['type'], // it can be <postgres> or <mssql>
       host: Database['host'],
       port: +Database['port'],
@@ -32,12 +35,28 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       extra: {
         trustServerCertificate: true,
       },
+      // seeds and factories
+      seeds: ['dist/**/*{.ts,.js}'],
+      factories: ['dist/**/*{.ts,.js}'],
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const AppDataSource = new DataSource(
       typeOrmModuleOptions as SqlServerConnectionOptions,
     );
+
+    (async () => {
+      await AppDataSource.initialize();
+      await AppDataSource.dropDatabase();
+      await AppDataSource.destroy();
+    })();
+
+    setTimeout(async () => {
+      await AppDataSource.initialize();
+      runSeeders(AppDataSource, {
+        seeds: ['dist/**/*.seeder{.ts,.js}'],
+        factories: ['dist/**/*.factory{.ts,.js}'],
+      });
+    }, 5000);
 
     return typeOrmModuleOptions;
   }
