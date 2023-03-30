@@ -60,6 +60,17 @@ export class UserRepository extends AbsRepository<User> {
     return result;
   }
 
+  async queryAllUsersAndCountRoles(): Promise<User[]> {
+    const queryBuilder = this.createQueryBuilder('user');
+    const found = await queryBuilder
+      .leftJoinAndSelect('user.roles', 'role')
+      .loadRelationCountAndMap('user.rolesCount', 'user.roles')
+      .addSelect("CONCAT(user.name, ' | ', user.email)", 'fullName')
+      .getMany();
+
+    return found;
+  }
+
   async createEntity(body: CreateUserDto): Promise<User | undefined> {
     const { name, email } = body;
 

@@ -1,9 +1,10 @@
-import { Module, Scope } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
+import { MulterModule } from '@nestjs/platform-express';
 
 // locals
+import '../../database/typeorm/polyfill';
 import { AppController } from './controller/app.controller';
 import { AppService } from './service/app.service';
 import { UserModule } from '../user/user.module';
@@ -13,9 +14,6 @@ import { AdminModule } from '../admin/admin.module';
 import { AuthModule } from '../auth/auth.module';
 import { IdExists } from '../../common/lib/decorator/exist.decorator';
 import { Unique } from '../../common/lib/decorator/unique.decorator';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { UserInterceptor } from '../../common/lib/interceptor/user.interceptor';
-import { MulterModule } from '@nestjs/platform-express';
 import { RoleModule } from '../role/role.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);

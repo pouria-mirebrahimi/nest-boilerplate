@@ -19,7 +19,7 @@ export class Role {
   title: string;
 
   /**
-   * Relations
+   * @description: Relations
    */
 
   @ManyToMany(() => User, (user) => user.roles, { cascade: ['update'] })

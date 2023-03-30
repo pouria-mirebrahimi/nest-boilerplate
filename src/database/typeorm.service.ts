@@ -27,7 +27,8 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: Database['name'],
       username: Database['username'],
       password: Database['password'],
-      entities: ['dist/**/*.entity.{ts,js}'],
+      entities: ['dist/**/*.{entity,view}.{ts,js}'],
+      subscribers: ['dist/**/*.subscriber.{ts,js}'],
       migrations: ['dist/migrations/*.{ts,js}'],
       migrationsTableName: 'typeorm_migrations',
       logger: 'file',
@@ -40,23 +41,29 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       factories: ['dist/**/*{.ts,.js}'],
     };
 
-    const AppDataSource = new DataSource(
-      typeOrmModuleOptions as SqlServerConnectionOptions,
-    );
+    const seeding = this.config.get<boolean>('SEED') === true;
 
-    (async () => {
-      await AppDataSource.initialize();
-      await AppDataSource.dropDatabase();
-      await AppDataSource.destroy();
-    })();
+    if (seeding) {
+      console.log('Database seeding...');
 
-    setTimeout(async () => {
-      await AppDataSource.initialize();
-      runSeeders(AppDataSource, {
-        seeds: ['dist/**/*.seeder{.ts,.js}'],
-        factories: ['dist/**/*.factory{.ts,.js}'],
-      });
-    }, 5000);
+      const AppDataSource = new DataSource(
+        typeOrmModuleOptions as SqlServerConnectionOptions,
+      );
+
+      (async () => {
+        await AppDataSource.initialize();
+        await AppDataSource.dropDatabase();
+        await AppDataSource.destroy();
+      })();
+
+      setTimeout(async () => {
+        await AppDataSource.initialize();
+        runSeeders(AppDataSource, {
+          seeds: ['dist/**/*.seeder{.ts,.js}'],
+          factories: ['dist/**/*.factory{.ts,.js}'],
+        });
+      }, 5000);
+    }
 
     return typeOrmModuleOptions;
   }

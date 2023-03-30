@@ -3,17 +3,25 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dto/user.dto';
 import { User } from '../entity/user.entity';
 import { UserRepository } from '../repository/user.repository';
+import { UserViewRepository } from '../repository/user.view.repository';
+import { UserView } from '../view/user.view';
 
 @Injectable()
 export class UserService {
   @InjectRepository(UserRepository)
   private readonly repository: UserRepository;
+  @InjectRepository(UserViewRepository)
+  private readonly userViewRepo: UserViewRepository;
 
-  async findAllUsers(): Promise<User[]> {
-    return await this.repository.queryAllEntities();
+  async fetchAllUsers(): Promise<User[]> {
+    return await this.repository.queryAllUsersAndCountRoles();
   }
 
-  async getUserById(id: number): Promise<User | undefined> {
+  async fetchAllUsersView(): Promise<UserView[]> {
+    return await this.userViewRepo.queryAllEntities();
+  }
+
+  async fetchUserById(id: number): Promise<User | undefined> {
     const result = await this.repository.queryOneByOption({
       relations: ['roles'],
       where: {
@@ -21,9 +29,7 @@ export class UserService {
       },
     });
 
-    if (!result) {
-      throw new NotFoundException();
-    }
+    if (!result) throw new NotFoundException();
 
     return result;
   }

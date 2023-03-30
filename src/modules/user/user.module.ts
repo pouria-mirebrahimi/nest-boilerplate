@@ -5,10 +5,11 @@ import { UserController } from './controller/user.controller';
 import { UserService } from './service/user.service';
 // repository
 import { UserRepository } from './repository/user.repository';
+import { UserViewRepository } from './repository/user.view.repository';
 
 @Module({
   imports: [],
   controllers: [UserController],
-  providers: [UserService, UserRepository],
+  providers: [UserService, UserRepository, UserViewRepository],
 })
 export class UserModule {}

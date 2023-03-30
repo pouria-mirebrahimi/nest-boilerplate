@@ -1,21 +1,20 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
-import {
-  ClassSerializerInterceptor,
-  RequestMethod,
-  ValidationPipe,
-  VersioningType,
-} from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { ClassSerializerInterceptor, RequestMethod } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { useContainer } from 'class-validator';
+import * as moment from 'moment-timezone';
 
 // locals
 import { AppModule } from './modules/app/app.module';
 import { jsonConfig } from './common/helper/config.helper';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { useContainer } from 'class-validator';
 import { UserInterceptor } from './common/lib/interceptor/user.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  moment.tz.setDefault('UTC');
 
   app.enableVersioning({
     type: VersioningType.URI,
@@ -64,4 +63,5 @@ async function bootstrap() {
 
   await app.listen(port);
 }
+
 bootstrap();

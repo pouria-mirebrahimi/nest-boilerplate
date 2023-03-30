@@ -1,13 +1,10 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { ManyToMany, JoinTable } from 'typeorm';
+import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
+// entity
 import { Role } from '../../role/entity/role.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
+// decorator
+import { VirtualColumn } from '../../../common/lib/decorator/virtual.decorator';
 
 @Entity()
 export class User {
@@ -24,21 +21,24 @@ export class User {
   public isDeleted: boolean;
 
   /**
-   * Relations
+   * @description: Virtual fields
    */
 
-  // @OneToOne(() => Role, (role) => role.user)
-  // role: Role;
+  public expired: string;
 
-  // @ManyToOne(() => Role, (role) => role.users, { cascade: ['update'] })
-  // role: Role;
+  @VirtualColumn()
+  public fullName: string;
+
+  /**
+   * @description: Relations
+   */
 
   @ManyToMany(() => Role, (role) => role.users, { cascade: ['update'] })
   @JoinTable({ name: 'relation_user_role' })
   roles: Role[];
 
-  /*
-   * Create and Update Date Columns
+  /**
+   * @description: Create and Update Date Columns
    */
 
   @CreateDateColumn()
