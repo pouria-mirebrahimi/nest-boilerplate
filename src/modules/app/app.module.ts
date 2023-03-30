@@ -2,24 +2,32 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
+import { ScheduleModule } from '@nestjs/schedule';
 
-// locals
+// typeorm
 import '../../database/typeorm/polyfill';
-import { AppController } from './controller/app.controller';
-import { AppService } from './service/app.service';
+// module
 import { UserModule } from '../user/user.module';
-import { getEnvPath } from '../../common/helper/env.helper';
-import { TypeOrmConfigService } from '../../database/typeorm.service';
 import { AdminModule } from '../admin/admin.module';
 import { AuthModule } from '../auth/auth.module';
+import { RoleModule } from '../role/role.module';
+import { TaskModule } from '../schedule/tasks.module';
+// controller
+import { AppController } from './controller/app.controller';
+// service
+import { AppService } from './service/app.service';
+import { TypeOrmConfigService } from '../../database/typeorm.service';
+// helper
+import { getEnvPath } from '../../common/helper/env.helper';
+// decorator
 import { IdExists } from '../../common/lib/decorator/exist.decorator';
 import { Unique } from '../../common/lib/decorator/unique.decorator';
-import { RoleModule } from '../role/role.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath,
       isGlobal: true,
@@ -34,6 +42,7 @@ const envFilePath: string = getEnvPath(`${__dirname}/../../common/envs`);
     AdminModule,
     AuthModule,
     RoleModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService, IdExists, Unique],
