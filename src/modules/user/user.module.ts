@@ -8,10 +8,21 @@ import { UserSseService } from './service/user.sse.service';
 // repository
 import { UserRepository } from './repository/user.repository';
 import { UserViewRepository } from './repository/user.view.repository';
+// event
+import { UserEventGateway } from './event/user.gateway';
 
 @Module({
   imports: [],
   controllers: [UserController, UserSseController],
-  providers: [UserService, UserSseService, UserRepository, UserViewRepository],
+  providers: [
+    // Service
+    UserService,
+    UserSseService,
+    // Repository
+    UserRepository,
+    UserViewRepository,
+    // Event
+    UserEventGateway,
+  ],
 })
 export class UserModule {}
