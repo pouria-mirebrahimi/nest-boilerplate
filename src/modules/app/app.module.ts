@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
 import { ScheduleModule } from '@nestjs/schedule';
-
 // typeorm
 import '../../database/typeorm/polyfill';
 // module
@@ -11,7 +10,7 @@ import { UserModule } from '../user/user.module';
 import { AdminModule } from '../admin/admin.module';
 import { AuthModule } from '../auth/auth.module';
 import { RoleModule } from '../role/role.module';
-import { TaskModule } from '../schedule/tasks.module';
+import { TaskModule } from '../task/task.module';
 // controller
 import { AppController } from './controller/app.controller';
 // service
