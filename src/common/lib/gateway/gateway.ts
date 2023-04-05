@@ -8,16 +8,17 @@ export abstract class AbsEventGateway {
   private readonly server: Server;
   public readonly wsClients: Array<Socket> = [];
 
-  private afterInit(): void {
-    this.server.emit(WebSocketEventEnum.INITIALIZE, { do: null });
+  handleConnection(@ConnectedSocket() client: any): void {
+    // TODO you can use this token to validate the user once at the connection time
+    // client.handshake.headers?.authorization?.toString()
+    // TODO use these value to handle the class room
+    // client.id
+    // client.handshake.query?.lessonId?.toString()
+    this.wsClients.push(client);
   }
 
-  private handleConnection(@ConnectedSocket() client: any): void {
-    // console.log(client.id);
-    // console.log(client.conn);
-    // console.log(client.handshake.query?.deviceId?.toString());
-    // console.log(client.handshake.query?.lessonId?.toString());
-    this.wsClients.push(client);
+  private afterInit(): void {
+    this.server.emit(WebSocketEventEnum.INITIALIZE, { do: null });
   }
 
   private handleDisconnect(@ConnectedSocket() client: Socket): void {

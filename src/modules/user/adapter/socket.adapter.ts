@@ -19,7 +19,6 @@ export class AuthIoAdapter extends IoAdapter {
       if (token) {
         const verified = this.authService.validateUser(token);
         if (verified) {
-          request.auth = { userId: 4 };
           return allowFunction(null, true);
         }
       }
