@@ -929,6 +929,14 @@
     socket.io "4.6.1"
     tslib "2.5.0"
 
+"@nestjs/platform-ws@^9.3.12":
+  version "9.3.12"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-ws/-/platform-ws-9.3.12.tgz#913636dcfc1bb8352418d9f97b0d05fd84abcb71"
+  integrity sha512-OEKDgrffzhqy6667crxw4dgII5/1ni5Oq9WAkzgAtL0E2DPLJXylzvQhutNbcNcI1JFP60DCtCAjwTho7c0zwQ==
+  dependencies:
+    tslib "2.5.0"
+    ws "8.13.0"
+
 "@nestjs/schedule@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@nestjs/schedule/-/schedule-2.2.0.tgz#6e6e55648d9fa03dfc861354d00da2985161753b"
@@ -5234,6 +5242,11 @@ socket.io@4.6.1:
     socket.io-adapter "~2.5.2"
     socket.io-parser "~4.2.1"
 
+socketio-wildcard@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/socketio-wildcard/-/socketio-wildcard-2.0.0.tgz#2466e832276b19163563bee772388747f912475b"
+  integrity sha512-Bf3ioZq15Z2yhFLDasRvbYitg82rwm+5AuER5kQvEQHhNFf4R4K5o/h57nEpN7A59T9FyRtTj34HZfMWAruw/A==
+
 source-map-support@0.5.13:
   version "0.5.13"
   resolved "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.13.tgz"
@@ -5970,6 +5983,11 @@ write-file-atomic@^4.0.1:
   dependencies:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.7"
+
+ws@8.13.0:
+  version "8.13.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.13.0.tgz#9a9fb92f93cf41512a0735c8f4dd09b8a1211cd0"
+  integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==
 
 ws@~8.11.0:
   version "8.11.0"

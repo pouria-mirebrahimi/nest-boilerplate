@@ -1,4 +1,4 @@
-import { WebSocketServer } from '@nestjs/websockets';
+import { ConnectedSocket, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 // enum
 import { WebSocketEventEnum } from '../enum/event.enum';
@@ -12,11 +12,15 @@ export abstract class AbsEventGateway {
     this.server.emit(WebSocketEventEnum.INITIALIZE, { do: null });
   }
 
-  private handleConnection(client: Socket): void {
+  private handleConnection(@ConnectedSocket() client: any): void {
+    // console.log(client.id);
+    // console.log(client.conn);
+    // console.log(client.handshake.query?.deviceId?.toString());
+    // console.log(client.handshake.query?.lessonId?.toString());
     this.wsClients.push(client);
   }
 
-  private handleDisconnect(client: Socket): void {
+  private handleDisconnect(@ConnectedSocket() client: Socket): void {
     const clientId = client.id;
     const index = this.wsClients.findIndex((c) => c.id === clientId);
     this.wsClients.splice(index, 1);

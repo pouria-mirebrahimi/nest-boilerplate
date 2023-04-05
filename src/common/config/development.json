@@ -47,7 +47,7 @@
   },
   "JWT": {
     "access-token": {
-      "secret": "ab",
+      "secret": "d4af1727-0639-4869-83ab-a39b1dcff3ab",
       "expiration": "6000000"
     },
     "refresh-token": {
