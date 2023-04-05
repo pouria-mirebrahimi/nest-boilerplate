@@ -3,10 +3,14 @@ import { ConnectedSocket, WebSocketGateway } from '@nestjs/websockets';
 import { MessageBody, SubscribeMessage } from '@nestjs/websockets';
 // abstract gateway class
 import { AbsEventGateway } from '../../../common/lib/gateway/gateway';
+// enum
 import { WebSocketEventEnum } from '../../../common/lib/enum/event.enum';
+// repository
 import { UserViewRepository } from '../repository/user.view.repository';
+// decorator
 import { UseGuard } from '../../../common/lib/decorator/guard.decorator';
-import { JWTAccessAuthGuard } from '../../auth/guard/jwt/auth.guard';
+// guard
+import { JWTWebsocketAuthGuard } from '../../auth/guard/jwt/auth.ws.guard';
 
 @WebSocketGateway({
   namespace: 'user/event',
@@ -16,13 +20,13 @@ export class UserEventGateway extends AbsEventGateway {
   @InjectRepository(UserViewRepository)
   private readonly userRepo: UserViewRepository;
 
-  @UseGuard(JWTAccessAuthGuard)
+  @UseGuard(JWTWebsocketAuthGuard)
   @SubscribeMessage(WebSocketEventEnum.TEST)
   async onTest(
     @ConnectedSocket() client: any,
     @MessageBody() data: string | object,
   ): Promise<string> {
-    console.log(client.conn.user);
+    console.log('onTest', client.conn.user);
     // const found = await this.userRepo.queryAllEntities();
     // console.log(found);
 
