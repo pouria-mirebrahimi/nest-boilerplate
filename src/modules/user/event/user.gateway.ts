@@ -7,8 +7,6 @@ import { WebSocketEventEnum } from '../../../common/lib/enum/event.enum';
 import { UserViewRepository } from '../repository/user.view.repository';
 import { UseGuard } from '../../../common/lib/decorator/guard.decorator';
 import { JWTAccessAuthGuard } from '../../auth/guard/jwt/auth.guard';
-import { User } from '../../../common/lib/decorator/user.decorator';
-import { Req } from '@nestjs/common';
 
 @WebSocketGateway({
   namespace: 'user/event',
