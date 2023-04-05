@@ -5,6 +5,7 @@ import { UserSseController } from './controller/user.sse.controller';
 // service
 import { UserService } from './service/user.service';
 import { UserSseService } from './service/user.sse.service';
+import { AuthService } from '../auth/service/auth.service';
 // repository
 import { UserRepository } from './repository/user.repository';
 import { UserViewRepository } from './repository/user.view.repository';
@@ -18,6 +19,7 @@ import { UserEventGateway } from './event/user.gateway';
     // Service
     UserService,
     UserSseService,
+    AuthService,
     // Repository
     UserRepository,
     UserViewRepository,
