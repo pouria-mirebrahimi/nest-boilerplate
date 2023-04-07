@@ -2,7 +2,7 @@ import { INestApplicationContext } from '@nestjs/common';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { ServerOptions } from 'socket.io';
 // service
-import { AuthService } from '../../auth/service/auth.service';
+import { AuthService } from '../service/auth.service';
 
 export class AuthIoAdapter extends IoAdapter {
   private authService: AuthService;
