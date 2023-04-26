@@ -18,6 +18,12 @@ export class UserService {
     private readonly userViewRepo: UserViewRepository,
   ) {}
 
+  /**
+   * @description   Fetching all users using the base repository
+   *                queries defined in the repository of User.
+   *
+   * @returns       A list of all user entities.
+   */
   async fetchAllUsers(): Promise<User[]> {
     return await this.repository.queryAllUsersAndCountRoles();
   }
