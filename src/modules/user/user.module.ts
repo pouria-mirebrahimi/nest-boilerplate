@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+// modules
+import { TaskModule } from '../task/task.module';
 // controller
 import { UserController } from './controller/user.controller';
 import { UserSseController } from './controller/user.sse.controller';
@@ -26,5 +28,6 @@ import { UserEventGateway } from './event/user.gateway';
     // Event
     UserEventGateway,
   ],
+  exports: [UserService],
 })
 export class UserModule {}

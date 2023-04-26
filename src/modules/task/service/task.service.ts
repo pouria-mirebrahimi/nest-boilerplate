@@ -1,8 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron, Interval, Timeout } from '@nestjs/schedule';
+import * as moment from 'moment-timezone';
+// service
+import { UserService } from '../../user/service/user.service';
 
 @Injectable()
 export class TaskService {
+  constructor(private readonly userService: UserService) {}
+
   private readonly logger = new Logger(TaskService.name);
 
   @Cron('45 * * * * *', { name: 'logger' })
@@ -17,6 +22,10 @@ export class TaskService {
 
   @Timeout('notification', 5000)
   handleTimeout() {
-    this.logger.debug('Called once after 5 seconds');
+    (async () => {
+      const users = await this.userService.fetchAllUsersView();
+      console.log(`The ${users.length} user(s) added.`);
+    })();
+    this.logger.debug(`Called once after 5 seconds at ${moment()}`);
   }
 }
