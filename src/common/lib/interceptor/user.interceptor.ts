@@ -1,9 +1,5 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  NestInterceptor,
-  Injectable,
-} from '@nestjs/common';
+import { NestInterceptor, Injectable } from '@nestjs/common';
+import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
 // import * as jwt from 'jsonwebtoken';
 

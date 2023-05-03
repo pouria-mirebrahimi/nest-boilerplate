@@ -1,8 +1,6 @@
+import { InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import {
-  BadRequestException,
-  InternalServerErrorException,
-} from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 // utils
 import { getStorage } from '../utils/multer/storage';
