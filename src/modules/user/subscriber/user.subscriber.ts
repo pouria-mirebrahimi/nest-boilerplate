@@ -1,23 +1,21 @@
 import { EntitySubscriberInterface, EventSubscriber } from 'typeorm';
-import * as moment from 'moment-timezone';
-// entity
+import { Logger } from '@nestjs/common';
 import { User } from '../entity/user.entity';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
+  private readonly logger = new Logger(UserSubscriber.name);
+
   listenTo() {
     return User;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async afterLoad(user: User): Promise<void> {
     try {
-      const now = new Date();
-      console.log(user.createdAt);
-      console.log(now);
-      const duration = moment(now).diff(moment(user.createdAt), 'seconds');
-      console.log(`duration: ${duration}`);
-    } catch (e) {
-      console.log(e);
+      // TODO add your subscriber routines here
+    } catch (e: any) {
+      this.logger.error(e.message);
     }
   }
 }

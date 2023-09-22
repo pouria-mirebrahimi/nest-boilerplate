@@ -1,4 +1,5 @@
 import { ViewEntity, ViewColumn, DataSource } from 'typeorm';
+import { AbstractEntity } from '@app-common/lib';
 import { User as UserModel } from '../entity/user.entity';
 
 const expression = (dataSource: DataSource) =>
@@ -12,7 +13,7 @@ const expression = (dataSource: DataSource) =>
 @ViewEntity({
   expression,
 })
-export class UserView {
+export class UserView extends AbstractEntity {
   @ViewColumn()
   id: number;
 

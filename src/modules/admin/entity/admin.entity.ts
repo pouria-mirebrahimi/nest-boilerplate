@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity } from 'typeorm';
 import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { AbstractEntity } from '../../../common/lib/repository/abstract-entity';
+import { AbstractEntity } from '@app-common/lib';
 
 @Entity()
 export class Admin extends AbstractEntity {

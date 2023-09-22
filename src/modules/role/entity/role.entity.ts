@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToMany } from 'typeorm';
-import { AbstractEntity } from '../../../common/lib/repository/abstract-entity';
+import { AbstractEntity } from '@app-common/lib';
 import { User } from '../../user/entity/user.entity';
 
 @Entity()

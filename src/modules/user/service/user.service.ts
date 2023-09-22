@@ -1,12 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-// entity
 import { User } from '../entity/user.entity';
 import { UserView } from '../view/user.view';
-// repository
 import { UserRepository } from '../repository/user.repository';
 import { UserViewRepository } from '../repository/user.view.repository';
-// dto
 import { CreateUserDto } from '../dto/user.dto';
 
 @Injectable()
@@ -28,24 +25,37 @@ export class UserService {
     return await this.repository.queryAllUsersAndCountRoles();
   }
 
+  /**
+   * @description   This method is similar to the fetchAllUsers,
+   *                but this uses the view entity.
+   *
+   * @returns       A list of all user entities
+   */
   async fetchAllUsersView(): Promise<UserView[]> {
-    return await this.userViewRepo.queryAllEntities();
+    return await this.userViewRepo.queryManyByOption({});
   }
 
-  async fetchUserById(id: number): Promise<User | undefined> {
-    const result = await this.repository.queryOneByOption({
-      relations: ['roles'],
-      where: {
-        id,
-      },
-    });
-
-    if (!result) throw new NotFoundException();
-
-    return result;
+  /**
+   *
+   * @description   This method takes an id and returns
+   *                the related user instance.
+   *
+   * @param id      User id
+   * @returns       A specific user or throw an error
+   */
+  async fetchUserById(id: number): Promise<User> {
+    const found = await this.repository.queryOneById(id);
+    return found;
   }
 
-  async createUser(body: CreateUserDto): Promise<User | undefined> {
+  /**
+   * @description   This method saves a user instance in the
+   *                user table.
+   *
+   * @param body    Partial instance of user entity
+   * @returns       A user instance
+   */
+  async createUser(body: CreateUserDto): Promise<User> {
     return await this.repository.createEntity(body);
   }
 }

@@ -10,6 +10,10 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@app-common/": ["src/common"],
+      "@app-common/*": ["src/common/*"],
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

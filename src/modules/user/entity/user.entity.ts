@@ -1,11 +1,9 @@
+import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Entity, Column } from 'typeorm';
 import { ManyToMany, JoinTable } from 'typeorm';
-import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
-// entity
+import { AbstractEntity } from '@app-common/lib';
+import { VirtualColumn } from '@app-common/lib';
 import { Role } from '../../role/entity/role.entity';
-// decorator
-import { VirtualColumn } from '../../../common/lib/decorator/virtual.decorator';
-import { AbstractEntity } from '../../../common/lib/repository/abstract-entity';
 
 @Entity()
 export class User extends AbstractEntity {

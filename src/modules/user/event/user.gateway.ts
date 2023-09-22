@@ -1,15 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
+import { Logger } from '@nestjs/common';
 import { ConnectedSocket, WebSocketGateway } from '@nestjs/websockets';
 import { MessageBody, SubscribeMessage } from '@nestjs/websockets';
-// abstract gateway class
 import { AbsEventGateway } from '../../../common/lib/gateway/gateway';
-// enum
 import { WebSocketEventEnum } from '../../../common/lib/enum/event.enum';
-// repository
 import { UserViewRepository } from '../repository/user.view.repository';
-// decorator
 import { UseGuard } from '../../../common/lib/decorator/guard.decorator';
-// guard
 import { JWTWebsocketAuthGuard } from '../../auth/guard/jwt/auth.ws.guard';
 
 @WebSocketGateway({
@@ -17,6 +13,8 @@ import { JWTWebsocketAuthGuard } from '../../auth/guard/jwt/auth.ws.guard';
   cors: { origin: '*' },
 })
 export class UserEventGateway extends AbsEventGateway {
+  private readonly logger = new Logger(UserEventGateway.name);
+
   @InjectRepository(UserViewRepository)
   private readonly userRepo: UserViewRepository;
 
@@ -26,7 +24,7 @@ export class UserEventGateway extends AbsEventGateway {
     @ConnectedSocket() client: any,
     @MessageBody() data: string | object,
   ): Promise<string> {
-    console.log('onTest', client.conn.user);
+    this.logger.debug('onTest', client.conn.user);
     // const found = await this.userRepo.queryAllEntities();
     // console.log(found);
 
