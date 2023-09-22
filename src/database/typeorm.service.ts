@@ -41,7 +41,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       factories: ['dist/**/*{.ts,.js}'],
     };
 
-    const seeding = this.config.get<boolean>('SEED') === true;
+    const seeding = this.config.get<string>('SEED') === 'true';
 
     if (seeding) {
       console.log('Database seeding...');
