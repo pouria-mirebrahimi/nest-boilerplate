@@ -1,20 +1,9 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToMany,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-// entity
+import { Column, Entity, ManyToMany } from 'typeorm';
+import { AbstractEntity } from '../../../common/lib/repository/abstract-entity';
 import { User } from '../../user/entity/user.entity';
 
 @Entity()
-export class Role {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Role extends AbstractEntity {
   @Column()
   title: string;
 

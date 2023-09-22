@@ -1,12 +1,12 @@
 import { UpdateResult, DataSource } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { AbsRepository } from '../../../common/lib/repository/repository';
+import { AbstractRepository } from '../../../common/lib/repository/abstract-repository';
 import { Admin } from '../entity/admin.entity';
 
 @Injectable()
-export class AdminRepository extends AbsRepository<Admin> {
+export class AdminRepository extends AbstractRepository<Admin> {
   constructor(private readonly dataSource: DataSource) {
-    super(Admin, dataSource.createEntityManager());
+    super(Admin, dataSource);
   }
 
   async queryOneById(id: number): Promise<Admin> {

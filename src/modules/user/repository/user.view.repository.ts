@@ -1,15 +1,12 @@
-import { UpdateResult, FindOneOptions } from 'typeorm';
+import { UpdateResult, FindOneOptions, Repository } from 'typeorm';
 import { DataSource, FindManyOptions } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { FindOptionsWhere, ObjectID } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-// entity
 import { UserView } from '../view/user.view';
-// repository
-import { AbsRepository } from '../../../common/lib/repository/repository';
 
 @Injectable()
-export class UserViewRepository extends AbsRepository<UserView> {
+export class UserViewRepository extends Repository<UserView> {
   constructor(private dataSource: DataSource) {
     super(UserView, dataSource.createEntityManager());
   }

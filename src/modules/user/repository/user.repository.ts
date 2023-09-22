@@ -1,20 +1,16 @@
-import {
-  DataSource,
-  FindManyOptions,
-  UpdateResult,
-  FindOneOptions,
-} from 'typeorm';
+import { DataSource, FindManyOptions } from 'typeorm';
+import { UpdateResult, FindOneOptions } from 'typeorm';
+import { FindOptionsWhere, ObjectID } from 'typeorm';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { Injectable } from '@nestjs/common';
 import { User } from '../entity/user.entity';
 import { CreateUserDto } from '../dto/user.dto';
-import { AbsRepository } from '../../../common/lib/repository/repository';
-import { FindOptionsWhere, ObjectID } from 'typeorm';
-import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { AbstractRepository } from '../../../common/lib/repository/abstract-repository';
 
 @Injectable()
-export class UserRepository extends AbsRepository<User> {
+export class UserRepository extends AbstractRepository<User> {
   constructor(private dataSource: DataSource) {
-    super(User, dataSource.createEntityManager());
+    super(User, dataSource);
   }
 
   async queryOneByOption(option: FindOneOptions): Promise<User | undefined> {
@@ -48,11 +44,6 @@ export class UserRepository extends AbsRepository<User> {
 
   queryDelete(): void {
     throw new Error('Method not implemented.');
-  }
-
-  async queryOneById(id: number): Promise<User | undefined> {
-    const result = await this.findOneBy({ id: id });
-    return result;
   }
 
   async queryAllEntities(options?: FindManyOptions<User>): Promise<User[]> {

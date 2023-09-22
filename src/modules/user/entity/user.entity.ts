@@ -1,16 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { ManyToMany, JoinTable } from 'typeorm';
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
 // entity
 import { Role } from '../../role/entity/role.entity';
 // decorator
 import { VirtualColumn } from '../../../common/lib/decorator/virtual.decorator';
+import { AbstractEntity } from '../../../common/lib/repository/abstract-entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  public id!: number;
-
+export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 120 })
   public name: string;
 

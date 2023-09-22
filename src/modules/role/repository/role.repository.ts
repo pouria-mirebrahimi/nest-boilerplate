@@ -7,12 +7,12 @@ import { FindOptionsWhere, ObjectID, UpdateResult } from 'typeorm';
 import { Role } from '../entity/role.entity';
 import { User } from '../../user/entity/user.entity';
 // repository
-import { AbsRepository } from '../../../common/lib/repository/repository';
+import { AbstractRepository } from '../../../common/lib/repository/abstract-repository';
 
 @Injectable()
-export class RoleRepository extends AbsRepository<Role> {
+export class RoleRepository extends AbstractRepository<Role> {
   constructor(private dataSource: DataSource) {
-    super(Role, dataSource.createEntityManager());
+    super(Role, dataSource);
   }
 
   async queryOneByOption(option: FindOneOptions): Promise<Role | undefined> {

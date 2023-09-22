@@ -1,11 +1,9 @@
 import { Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { AbstractEntity } from '../../../common/lib/repository/abstract-entity';
 
 @Entity()
-export class Admin {
-  @PrimaryGeneratedColumn()
-  public id!: number;
-
+export class Admin extends AbstractEntity {
   @Column({ type: 'varchar', length: 120 })
   public name: string;
 

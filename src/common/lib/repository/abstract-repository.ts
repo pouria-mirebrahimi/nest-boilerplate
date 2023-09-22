@@ -1,15 +1,22 @@
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-import { Repository, UpdateResult, FindOneOptions } from 'typeorm';
-import {
-  DeepPartial,
-  FindManyOptions,
-  FindOptionsWhere,
-  ObjectID,
-} from 'typeorm';
+import { FindOneOptions, EntityTarget, DataSource } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
+import { FindOptionsWhere, ObjectID } from 'typeorm';
+import { DeepPartial, FindManyOptions } from 'typeorm';
+import { AbstractEntity } from './abstract-entity';
 
-export abstract class AbsRepository<E> extends Repository<E> {
-  abstract queryOneById(id: number): Promise<E | undefined>;
-  abstract queryOneByOption(option: FindOneOptions<E>): Promise<E | undefined>;
+export abstract class AbstractRepository<
+  E extends AbstractEntity,
+> extends Repository<E> {
+  constructor(target: EntityTarget<E>, dataSource: DataSource) {
+    super(target, dataSource.createEntityManager());
+  }
+
+  async queryOneById(id: number): Promise<E> {
+    return this.findOne({ where: { id } } as FindOneOptions<E>);
+  }
+
+  abstract queryOneByOption(option: FindOneOptions<E>): Promise<E>;
   abstract queryManyByOption(
     option: FindManyOptions<E>,
   ): Promise<E[] | undefined>;
