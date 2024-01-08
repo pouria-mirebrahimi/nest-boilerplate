@@ -8,7 +8,7 @@ describe('User ::: testing controller', () => {
   let controller: UserController;
 
   const mockUsersService = {
-    getUserById: jest.fn().mockImplementationOnce((id: number) => {
+    fetchUserById: jest.fn().mockImplementationOnce((id: number) => {
       return {
         id,
         name: 'johnDoe',

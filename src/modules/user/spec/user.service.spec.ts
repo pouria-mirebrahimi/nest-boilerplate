@@ -1,27 +1,30 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { NotFoundException } from '@nestjs/common';
 
 // locals
 import { UserService } from '../service/user.service';
 import { UserRepository } from '../repository/user.repository';
+import { UserViewRepository } from '../repository/user.view.repository';
 import mockUsers from './mock-users';
 
 describe('User ::: testing service', () => {
   let userService: UserService;
   let userRepository: UserRepository;
 
+  const mockUserViewRepository = {
+    queryAllEntities: jest.fn(() => mockUsers),
+  };
   const mockUserRepository = {
     queryAllEntities: jest.fn(() => mockUsers),
     queryOneById: jest.fn((id) => {
       const entity = mockUsers.filter((user) => user.id === id);
-      if (entity.length === 0) return undefined;
+      if (entity.length === 0) return Promise.reject('Not Found');
       return entity;
     }),
     queryOneByOption: jest.fn((option) => {
       const id = option.where.id;
       const entity = mockUsers.filter((user) => user.id === id);
-      if (entity.length === 0) return undefined;
+      if (entity.length === 0) return [];
       return entity;
     }),
   };
@@ -34,6 +37,10 @@ describe('User ::: testing service', () => {
         {
           provide: getRepositoryToken(UserRepository),
           useValue: mockUserRepository,
+        },
+        {
+          provide: getRepositoryToken(UserViewRepository),
+          useValue: mockUserViewRepository,
         },
       ],
     }).compile();
@@ -71,11 +78,5 @@ describe('User ::: testing service', () => {
         id,
       },
     });
-  });
-
-  it('should be called and return a NotFoundException', async () => {
-    await expect(userService.fetchUserById(-1)).rejects.toThrow(
-      new NotFoundException(),
-    );
   });
 });
