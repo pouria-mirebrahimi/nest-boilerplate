@@ -2,7 +2,7 @@ import { FindOneOptions, DeleteResult } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { DataSource, DeepPartial, FindManyOptions } from 'typeorm';
-import { FindOptionsWhere, ObjectID, UpdateResult } from 'typeorm';
+import { FindOptionsWhere, ObjectId, UpdateResult } from 'typeorm';
 // entity
 import { Role } from '../entity/role.entity';
 import { User } from '../../user/entity/user.entity';
@@ -52,11 +52,11 @@ export class RoleRepository extends AbstractRepository<Role> {
       | number
       | FindOptionsWhere<Role>
       | Date
-      | ObjectID
+      | ObjectId
       | string[]
       | number[]
       | Date[]
-      | ObjectID[],
+      | ObjectId[],
     partialEntity: QueryDeepPartialEntity<Role>,
   ): Promise<UpdateResult> {
     const updateResult = await this.update(criteria, partialEntity);
@@ -89,8 +89,8 @@ export class RoleRepository extends AbstractRepository<Role> {
       | number[]
       | Date
       | Date[]
-      | ObjectID
-      | ObjectID[]
+      | ObjectId
+      | ObjectId[]
       | FindOptionsWhere<Role>,
   ): Promise<DeleteResult> {
     return await this.delete(criteria);

@@ -53,7 +53,7 @@ describe('User ::: testing service', () => {
   });
 
   xit('should be called and return two user items', async () => {
-    const found = await userService.findAllUsers();
+    const found = await userService.fetchAllUsers();
     expect(found).toEqual(mockUsers);
 
     expect(mockUserRepository.queryAllEntities).toHaveBeenCalled();
@@ -62,7 +62,7 @@ describe('User ::: testing service', () => {
   xit('should be called and return a user item based on ID', async () => {
     const id = 1;
     const mockUser = mockUsers.filter((user) => user.id === id);
-    const found = await userService.getUserById(id);
+    const found = await userService.fetchUserById(id);
     expect(found).toEqual(mockUser);
 
     expect(mockUserRepository.queryOneByOption).toHaveBeenCalledWith({
@@ -74,7 +74,7 @@ describe('User ::: testing service', () => {
   });
 
   it('should be called and return a NotFoundException', async () => {
-    await expect(userService.getUserById(-1)).rejects.toThrow(
+    await expect(userService.fetchUserById(-1)).rejects.toThrow(
       new NotFoundException(),
     );
   });
