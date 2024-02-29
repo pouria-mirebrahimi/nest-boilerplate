@@ -8,7 +8,6 @@ import { Role } from '../entity/role.entity';
 import { HttpResponseDto } from '../../../common/lib/dto/response.dto';
 import { CreateRoleDto } from '../dto/role.dto';
 import { User } from '../../user/entity/user.entity';
-import { In } from 'typeorm';
 
 export class RoleService {
   constructor(
@@ -40,9 +39,9 @@ export class RoleService {
   async addUserToRole(id: number, userId: number): Promise<HttpResponseDto> {
     const updateResult = await this.roleRepository.queryAddUserToRole(
       {
-        relations: ['users'],
+        relations: { users: true },
         where: {
-          users: { id: userId },
+          id,
         },
       },
       <User>{ id: userId },

@@ -6,17 +6,17 @@
     "assets": [
       {
         "include": "common/config/",
-        "outDir": "dist",
+        "outDir": "dist/src",
         "watchAssets": true
       },
       {
         "include": "common/envs/",
-        "outDir": "dist",
+        "outDir": "dist/src",
         "watchAssets": true
       },
       {
         "include": "common/asset/",
-        "outDir": "dist",
+        "outDir": "dist/src",
         "watchAssets": true
       }
     ]

@@ -5,7 +5,8 @@ import { Body, Controller, Get, Inject } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { User } from '../entity/user.entity';
 import { UserView } from '../view/user.view';
-import { CreateUserDto } from '../dto/user.dto';
+import { AddRoleDto, CreateUserDto } from '../dto/user.dto';
+import { HttpResponseDto } from '@app-common/lib/dto/response.dto';
 
 @ApiTags('user')
 @Controller({ path: 'user', version: ['1'] })
@@ -32,5 +33,12 @@ export class UserController {
   @ApiBody({ type: CreateUserDto })
   public createUser(@Body() body: CreateUserDto): Promise<User | undefined> {
     return this.service.createUser(body);
+  }
+
+  @Post('add/role')
+  @ApiBody({ type: AddRoleDto })
+  public addRole(@Body() body: AddRoleDto): Promise<HttpResponseDto> {
+    const { userId, roleId } = body;
+    return this.service.addRole(userId, roleId);
   }
 }

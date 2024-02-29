@@ -1,8 +1,11 @@
 import { DataSource } from 'typeorm';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { Injectable } from '@nestjs/common';
 import { AbstractRepository } from '@app-common/lib';
 import { User } from '../entity/user.entity';
+
 import { CreateUserDto } from '../dto/user.dto';
+import { Role } from '../../role/entity/role.entity';
 
 @Injectable()
 export class UserRepository extends AbstractRepository<User> {
@@ -19,6 +22,20 @@ export class UserRepository extends AbstractRepository<User> {
       .getMany();
 
     return found;
+  }
+
+  async queryAddRole(id: number, roleEntity: QueryDeepPartialEntity<Role>) {
+    // Only for PostgreSql database
+    const result = await this.dataSource
+      .createQueryBuilder()
+      .update(User)
+      .set({
+        roles: () => `array_append("roles", ${roleEntity})`,
+      })
+      .where('id = :id', { id })
+      .execute();
+
+    return result;
   }
 
   async createEntity(body: CreateUserDto): Promise<User> {
